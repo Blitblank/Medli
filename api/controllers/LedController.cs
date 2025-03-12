@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 [Route("api/[controller]")]
 public class LedController : ControllerBase
 {
-    private static string _ledColor = "off";
 
-    public class Request
+    public class LedColorRequest
     {
-        public string Color { get; set; }
+        public required string Color { get; set; } 
     }
+ 
+    private static string _ledColor = "off";
 
     [HttpGet("status")]
     public IActionResult GetStatus()
@@ -19,7 +20,7 @@ public class LedController : ControllerBase
     }
 
     [HttpPost("setColor")]
-    public IActionResult SetColor([FromBody] Request req)
+    public IActionResult SetColor([FromBody] LedColorRequest req)
     {
         _ledColor = req.Color;
         return Ok(new { message = $"LED color set to {req.Color}" });
