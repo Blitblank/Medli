@@ -1,0 +1,6 @@
+
+/api.sln
+/.vscode/*
+
+/api/bin/*
+/api/obj/*
