@@ -12,9 +12,15 @@ export class AppComponent {
 
 	constructor(private apiService: ApiService) {}
 
-	public sendReq() {
+	public httpGet() {
 		this.apiService.getData().subscribe(response => {
 			console.log('GET Response:', response);
+		});
+	}
+
+	public httpPost() {
+		this.apiService.postData("red").subscribe(response => {
+			console.log('POST Response:', response);
 		});
 	}
 

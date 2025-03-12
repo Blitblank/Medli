@@ -7,6 +7,11 @@ public class LedController : ControllerBase
 {
     private static string _ledColor = "off";
 
+    public class Request
+    {
+        public string Color { get; set; }
+    }
+
     [HttpGet("status")]
     public IActionResult GetStatus()
     {
@@ -14,9 +19,9 @@ public class LedController : ControllerBase
     }
 
     [HttpPost("setColor")]
-    public IActionResult SetColor([FromBody] string color)
+    public IActionResult SetColor([FromBody] Request req)
     {
-        _ledColor = color;
-        return Ok(new { message = $"LED color set to {color}" });
+        _ledColor = req.Color;
+        return Ok(new { message = $"LED color set to {req.Color}" });
     }
 }
