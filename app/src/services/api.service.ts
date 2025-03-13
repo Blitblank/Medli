@@ -8,7 +8,9 @@ import { Observable } from 'rxjs';
 export class ApiService {
     private baseUrl = 'http://localhost:5289/api'; 
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) { 
+        
+    }
 
     // HTTP GET Request Example
     getData(): Observable<any> {
@@ -23,4 +25,14 @@ export class ApiService {
         }
         );
     }
+
+    startTemperature(): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}/led/startTemperature`);
+    }
+
+    getTemperature(): Observable<any> {
+        return this.http.get<any>(`${this.baseUrl}/led/temperature`);
+    }
+    
+
 }

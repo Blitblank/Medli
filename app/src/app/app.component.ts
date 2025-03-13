@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { timeInterval } from 'rxjs';
 
 import { ApiService } from 'src/services/api.service';
 
@@ -11,12 +12,32 @@ export class AppComponent {
 	title = 'app';
 
 	public currentColor: string = "null";
+	public temperature: number = 0.0;
 
 	constructor(private apiService: ApiService) {}
+
+	ngOnInit() {
+		this.apiService.startTemperature().subscribe(response => {
+			this.temperature = response.temperature;
+			console.log('GET Response:', response);
+		});
+
+		setInterval(() => {
+			this.apiService.getTemperature().subscribe(response => {
+				this.temperature = response.temperature * 9/5 + 32;
+				console.log('GET Response:', response);
+			});
+		}, 1000);
+	}
 
 	public httpGet() {
 		this.apiService.getData().subscribe(response => {
 			this.currentColor = response.color;
+			console.log('GET Response:', response);
+		});
+
+		this.apiService.getTemperature().subscribe(response => {
+			this.temperature = response.temperature;
 			console.log('GET Response:', response);
 		});
 	}

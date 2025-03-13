@@ -20,9 +20,23 @@ public class LedController : ControllerBase
     }
 
     [HttpPost("setColor")]
-    public IActionResult SetColor([FromBody] LedColorRequest req)
+    public async Task<IActionResult> SetColor([FromBody] LedColorRequest req)
     {
         _ledColor = req.Color;
-        return Ok(new { message = $"LED color set to {req.Color}" });
+        await WebSocketClient.SendCommand(_ledColor);
+        return Ok(new { message = $"LED color set to {_ledColor}" });
+    }
+
+    [HttpGet("startTemperature")]
+    public async Task<IActionResult> StartTemperature()
+    {
+        await WebSocketClient.ConnectAndReceiveTemperature();
+        return Ok(new { message = "Temperature request sent to ESP32" });
+    }
+
+    [HttpGet("temperature")]
+    public IActionResult GetTemperature()
+    {
+        return Ok(new { temperature = WebSocketClient.temperature });
     }
 }
