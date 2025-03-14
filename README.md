@@ -1,5 +1,5 @@
 
 # Medli
-Raspberry Pi Web Server for Komali (ESP32 Clients)
+ASP.NET & Angular Web Server for Komali Clients
 =======
 
